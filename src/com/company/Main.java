@@ -34,7 +34,6 @@ public class Main {
                         break;
                 }
 
-                command = player.commands();
             } while (command!=Command.Stand);
         }
     }
