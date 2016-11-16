@@ -6,13 +6,17 @@ package com.company;
 public class Card {
     Suit suit;
     Value value;
-    int cost;
 
     Card (Suit _suit, Value _value)
     {
         suit = _suit;
         value = _value;
     }
+
+    public int getScore(){
+        return this.value.score;
+    }
+
 
     @Override
     public String toString() {

@@ -7,15 +7,13 @@ import java.util.List;
  * Created by student3 on 10.11.16.
  */
 public class Player {
+    Hand hand = new Hand();
+    Intellect intellect;
+    public void take(Card current) {
+        this.hand.add(current);
+    }
 
-    public List<Card> cards = new LinkedList<Card>();
-    public int score = 0;
-
-    public void countCards(){
-
-        for (Card card: cards)
-        {
-            score+= card.cost;
-        }
+    public Command commands() {
+        return this.intellect.think(this.hand.getScore());
     }
 }

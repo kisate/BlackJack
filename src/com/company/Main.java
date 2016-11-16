@@ -2,16 +2,40 @@ package com.company;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import static com.company.Command.Hit;
+
 public class Main {
 
     public static void main(String[] args) {
-	// write your code here
-        List<Card> deck = new LinkedList<Card>();
+        // write your code here
+        Dealer dealer = new Dealer();
+        List<Player> players = new LinkedList<Player>();
 
-        for (Suit suit: Suit.values()) {
-            for (Value value: Value.values()) {
-                deck.add(new Card(suit, value));
-            }
+        players.add(new Computer());
+        players.add(new Computer());
+        players.add(new Computer());
+        players.add(new Human());
+        players.add(dealer);
+
+        for (Player player : players) {
+            dealer.deal(player);
+            dealer.deal(player);
+        }
+
+        for (Player player: players) {
+            Command command;
+            do {
+                System.out.println(""+player.hand.getScore()+": " + player.hand);
+                command = player.commands();
+                switch (command) {
+                    case Hit:
+                        dealer.deal(player);
+                        break;
+                }
+
+                command = player.commands();
+            } while (command!=Command.Stand);
         }
     }
 }
