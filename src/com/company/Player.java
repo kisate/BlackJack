@@ -8,7 +8,11 @@ import java.util.List;
  */
 public class Player {
     Hand hand = new Hand();
+    public String name;
+    public int bet, points;
     Intellect intellect;
+    public PlayerStates state;
+
     public void take(Card current) {
         this.hand.add(current);
     }
@@ -16,4 +20,7 @@ public class Player {
     public Command commands() {
         return this.intellect.think(this.hand.getScore());
     }
+
+
+
 }

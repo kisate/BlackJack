@@ -12,10 +12,10 @@ public class Main {
         Dealer dealer = new Dealer();
         List<Player> players = new LinkedList<Player>();
 
-        players.add(new Computer());
-        players.add(new Computer());
-        players.add(new Computer());
-        players.add(new Human());
+        players.add(new Computer("Comp1"));
+        players.add(new Computer("Comp2"));
+        players.add(new Computer("Comp3"));
+        players.add(new Human("You"));
         players.add(dealer);
 
         for (Player player : players) {
@@ -26,7 +26,8 @@ public class Main {
         for (Player player: players) {
             Command command;
             do {
-                System.out.println(""+player.hand.getScore()+": " + player.hand);
+                System.out.println(player.name + " : score "
+                        + player.hand.getScore()+ " cards : " + player.hand);
                 command = player.commands();
                 switch (command) {
                     case Hit:
@@ -35,6 +36,21 @@ public class Main {
                 }
 
             } while (command!=Command.Stand);
+        }
+
+        System.out.println("Dealer: "+dealer.hand.getScore()+" score with"+dealer.hand);
+
+        for (Player player : players){
+            if(player!=dealer){
+                if (player.hand.isOverDraft())
+                    player.state = PlayerStates.Loss;
+                else if ((player.hand.getScore() > dealer.hand.getScore()) || (dealer.hand.isOverDraft()))
+                    player.state = PlayerStates.Win;
+                else
+                    player.state = PlayerStates.Loss;
+
+                System.out.println(player.name + " : " + player.state + " score " + player.hand.getScore()+ " cards : " + player.hand);
+            }
         }
     }
 }

@@ -7,6 +7,7 @@ public class Dealer extends Computer{
     Deck deck = new Deck();
 
     Dealer(){
+        super("Dealer");
         this.intellect = new DealerIntellect();
     }
 
