@@ -8,13 +8,15 @@ import java.util.LinkedList;
  */
 public class Deck extends LinkedList<Card>{
 
-    public Deck() {
-        for (Suit suit: Suit.values()) {
-            for (Value value: Value.values()) {
-                this.add(new Card(suit, value));
+    public Deck(int amount) {
+        for (int i = 0; i < amount; i++) {
+
+            for (Suit suit : Suit.values()) {
+                for (Value value : Value.values()) {
+                    this.add(new Card(suit, value));
+                }
             }
         }
-
         Collections.shuffle(this);
     }
 

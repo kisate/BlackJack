@@ -8,5 +8,6 @@ public class Computer extends Player{
         this.intellect = new DealerIntellect();
         this.name = name;
         this.points = points;
+        this.better = new ComputerBetter();
     }
 }

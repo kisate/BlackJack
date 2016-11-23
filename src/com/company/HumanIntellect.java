@@ -6,7 +6,7 @@ import java.util.Scanner;
  * Created by student3 on 16.11.16.
  */
 public class HumanIntellect extends Intellect{
-    static Scanner in = new Scanner(System.in);
+    static Scanner in = Table.sc;
 
     @Override
     public Command think(int score) {

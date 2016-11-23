@@ -11,7 +11,8 @@ public class Player {
     public String name;
     public int bet, points;
     Intellect intellect;
-    public PlayerStates state;
+    Better better;
+    public PlayerStates state = PlayerStates.Loss;
 
     public void take(Card current) {
         this.hand.add(current);
