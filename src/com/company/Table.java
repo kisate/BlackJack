@@ -23,6 +23,7 @@ public class Table {
         int spts = sc.nextInt();
         System.out.println("How many human players?");
         humPlrs = sc.nextInt();
+        sc.nextLine();
         dealer = new Dealer(decks);
         for (int i = 0; i < plNum; i++) {
             players.add(new Computer("Comp" + i, spts));
@@ -32,19 +33,21 @@ public class Table {
             String name = sc.nextLine();
             players.add(new Human(name, spts));
         }
+        players.add(dealer);
     }
 
     public void play(){
 
         for (Player player : players) {
             if (player.state != PlayerStates.Bankrupt) {
-                player.bet = player.better.makeBet(player.points);
+                player.hand.clear();
+                player.bet = player.better.makeBet(player);
                 dealer.deal(player);
                 dealer.deal(player);
             }
             else System.out.println(player.name + " : Bankrupt");
         }
-
+        System.out.println("Dealer : " + dealer.hand.getScore() + " score, cards : " + dealer.hand);
         for (Player player: players) {
 
             if (player.state != PlayerStates.Bankrupt) {
@@ -55,18 +58,30 @@ public class Table {
                     System.out.println(player.name + " : points " + player.points + ", bet " + player.bet + ", score "
                             + player.hand.getScore() + ", cards : " + player.hand);
                     command = player.commands();
-                    switch (command) {
-                        case Hit:
-                            dealer.deal(player);
-                            break;
-                    }
+                    if(readCommand(player, command)) break;
 
                 } while (command != Command.Stand);
             } else System.out.println(player.name + " : Bankrupt");
         }
+        checkWinCondts();
+    }
 
-        System.out.println("Dealer: "+dealer.hand.getScore()+", score with "+dealer.hand);
+    public boolean readCommand(Player player, Command command){
+        switch (command) {
+            case Hit:
+                dealer.deal(player);
+                break;
+            case Double :
+                player.bet*= 2;
+                dealer.deal(player);
+                return true;
+            case Split :
+                break;
+        }
+        return false;
+    }
 
+    public void checkWinCondts(){
         for (Player player : players){
             if((player!=dealer) && (player.state != PlayerStates.Bankrupt)){
                 if (player.hand.isOverDraft()) {
@@ -83,7 +98,7 @@ public class Table {
                 }
                 if (player.points <= 0) player.state = PlayerStates.Bankrupt;
                 if (player.state != PlayerStates.Bankrupt)
-                System.out.println(player.name + " : " + player.state + ", score " + player.hand.getScore()+ ", cards : " + player.hand);
+                    System.out.println(player.name + " : " + player.state + ", points : " + player.points + ", score " + player.hand.getScore()+ ", cards : " + player.hand);
             }
 
             if (player.state == PlayerStates.Bankrupt) {
@@ -91,8 +106,13 @@ public class Table {
                 if (player instanceof Human) humPlrs--;
             }
         }
+        if (humPlrs == 0) {endGame(); return;}
 
-        if (humPlrs == 0) endGame();
+        System.out.println();
+        System.out.println("Begin new game?");
+        String in = sc.nextLine();
+        if ("no".startsWith(in)){endGame(); return;}
+
     }
 
     public void endGame() {

@@ -14,7 +14,7 @@ public class Main {
         // write your code here
         Table table = new Table();
         table.init();
-        table.play();
+        while(true) table.play();
 
     }
 }

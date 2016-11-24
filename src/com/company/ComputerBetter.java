@@ -5,7 +5,7 @@ package com.company;
  */
 public class ComputerBetter extends Better{
     @Override
-    public int makeBet(int points) {
-        return points / 2;
+    public int makeBet(Player player) {
+        return player.points / 2;
     }
 }

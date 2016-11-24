@@ -12,16 +12,16 @@ public class HumanIntellect extends Intellect{
     public Command think(int score) {
         if(score > 21)
             return Command.Stand;
-        do {
+        while (true) {
             System.out.println("hit/stand: ");
             String s = in.nextLine();
-            if("hit".startsWith(s)){
+            if ("hit".startsWith(s)) {
                 return Command.Hit;
-            } else if("stand".startsWith(s)){
+            } else if ("stand".startsWith(s)) {
                 return Command.Stand;
-            }else{
+            } else {
                 System.out.println("Command not recognized...");
             }
-        } while (true);
+        }
     }
 }

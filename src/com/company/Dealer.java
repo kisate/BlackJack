@@ -5,11 +5,12 @@ package com.company;
  */
 public class Dealer extends Computer{
     Deck deck;
-
+    Better better = new NullBetter();
     Dealer(int decks){
         super("Dealer", 0);
         this.intellect = new DealerIntellect();
         this.deck = new Deck(decks);
+        name = "Dealer";
     }
 
     public void deal(Player player) {
